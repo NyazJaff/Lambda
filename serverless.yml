@@ -1,0 +1,17 @@
+service: lambda-test
+frameworkVersion: '2'
+provider:
+  name: aws
+  runtime: nodejs12.x
+plugins:
+  - serverless-webpack
+package:
+  individually: true
+
+functions:
+  hello:
+    handler: handler.hello
+    events:
+      - http:
+          path: user/create
+          method: get

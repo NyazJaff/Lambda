@@ -9,8 +9,7 @@ provider:
       - "*/*"
 plugins:
 #  - serverless-webpack
-  - serverless-apigw-binary
-  - serverless-apigwy-binary
+  - serverless-offline
 
 package:
   individually: true
@@ -26,14 +25,24 @@ functions:
     handler: src/index.generatePdf
     events:
       - http:
-          path: /pdf
+          path: user/pdf
           method: get
           # This is new
           contentHandling: CONVERT_TO_BINARY
-
 
 # This is new
 custom:
   apigwBinary:
     types:
       - "application/pdf"
+
+htmlToPdf:
+  handler: handler.htmlToPdf
+  # layers:
+  #   - ${cf:executables-layer-${self:provider.stage}.HtmlToPdfLayerExport}
+  events:
+    - http:
+        path: api/htmltopdf
+        method: get
+        cors: true
+        integration: lambda

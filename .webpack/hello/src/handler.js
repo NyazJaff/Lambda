@@ -1,0 +1,1 @@
+module.exports=(()=>{"use strict";var e={996:e=>{e.exports.hello=async e=>({statusCode:200,body:JSON.stringify({message:"Go Serverless v1.0! Your function executed successfully!",input:"nyaz1"},null,2)})}},r={};return function s(t){if(r[t])return r[t].exports;var o=r[t]={exports:{}};return e[t](o,o.exports,s),o.exports}(996)})();

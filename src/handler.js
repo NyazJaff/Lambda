@@ -6,7 +6,7 @@ module.exports.hello = async event => {
     body: JSON.stringify(
       {
         message: 'Go Serverless v1.0! Your function executed successfully!',
-        input: 'nyaz',
+        input: 'nyaz1',
       },
       null,
       2

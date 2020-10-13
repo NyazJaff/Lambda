@@ -3,15 +3,37 @@ frameworkVersion: '2'
 provider:
   name: aws
   runtime: nodejs12.x
+  # This is new
+  apiGateway:
+    binaryMediaTypes:
+      - "*/*"
 plugins:
-  - serverless-webpack
+#  - serverless-webpack
+  - serverless-apigw-binary
+  - serverless-apigwy-binary
+
 package:
   individually: true
 
 functions:
   hello:
-    handler: handler.hello
+    handler: src/handler.hello
     events:
       - http:
           path: user/create
           method: get
+  generatePdf:
+    handler: src/index.generatePdf
+    events:
+      - http:
+          path: /pdf
+          method: get
+          # This is new
+          contentHandling: CONVERT_TO_BINARY
+
+
+# This is new
+custom:
+  apigwBinary:
+    types:
+      - "application/pdf"

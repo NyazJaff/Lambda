@@ -1,14 +1,16 @@
 service: lambda-test
 frameworkVersion: '2'
+
 provider:
   name: aws
   runtime: nodejs12.x
+  stage: ${opt:stage, 'dev'}
   # This is new
   apiGateway:
     binaryMediaTypes:
       - "*/*"
 plugins:
-#  - serverless-webpack
+  # - serverless-webpack
   - serverless-offline
 
 package:
@@ -16,33 +18,18 @@ package:
 
 functions:
   hello:
-    handler: src/handler.hello
+    handler: logic/handler.hello
     events:
       - http:
           path: user/create
           method: get
   generatePdf:
-    handler: src/index.generatePdf
+    handler: logic/index.generatePdf
+#    layers:
+#      - ${cf:executables-layer-${self:provider.stage}.HtmlToPdfLayerExport}
     events:
       - http:
           path: user/pdf
           method: get
-          # This is new
-          contentHandling: CONVERT_TO_BINARY
-
-# This is new
-custom:
-  apigwBinary:
-    types:
-      - "application/pdf"
-
-htmlToPdf:
-  handler: handler.htmlToPdf
-  # layers:
-  #   - ${cf:executables-layer-${self:provider.stage}.HtmlToPdfLayerExport}
-  events:
-    - http:
-        path: api/htmltopdf
-        method: get
-        cors: true
-        integration: lambda
+          cors: true
+          integration: lambda
